@@ -1,6 +1,6 @@
 from flask import Flask, flash, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
-from asciitool import imageToAscii
+from app.asciitool import imageToAscii
 import os
 
 app = Flask(__name__)
@@ -40,6 +40,3 @@ def upload_file():
 def result():
     if request.method == 'GET':
         return render_template('result.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)

@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.dirname(__file__) + '/static/images'
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -28,13 +28,8 @@ def upload_file():
         if file.filename == '':
             return 'Failed'
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            fileExtension = findFileExtension(filename)
-            filePath = os.path.join(app.config['UPLOAD_FOLDER'], "input."+fileExtension)
-            outputPath = os.path.join(app.config['UPLOAD_FOLDER'], "out.txt")
-            file.save(filePath)
-            imageToAscii(filePath, outputPath)
-        return redirect(url_for('result'))
+            ascii_art = imageToAscii(file)
+        return {'message': ascii_art}
 
 @app.route('/result', methods=['GET', 'POST'])
 def result():

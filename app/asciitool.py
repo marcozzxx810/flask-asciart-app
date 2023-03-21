@@ -27,13 +27,22 @@ def writeStringToFile(string_matrix, outputFilePath):
     file = open(outputFilePath, "w")
     for row in string_matrix:
         file.write(''.join(row)+'\n')
-def imageToAscii(filePath, outputFilePath):
-    im = Image.open(filePath)
+
+def writeString(string_matrix):
+    ans = ""
+    for row in string_matrix:
+        ans += (''.join(row)+'\n')
+    return ans
+def imageToAscii(file):
+    print(type(file))
+    im = Image.open(file)
     rgb_im = im.convert('RGB')
     width, height = rgb_im.size
     average_im = average_image(rgb_im, int(width), int(height))
     normalized_matrix = scale_matrix(average_im)
     string_matrix = map_matrix_gscale(normalized_matrix)
 
-    writeStringToFile(string_matrix, outputFilePath)
+    ascii_art = writeString(string_matrix)
+
+    return ascii_art
 
